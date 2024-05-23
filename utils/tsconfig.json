@@ -1,0 +1,3 @@
+{
+  "extends": "../../typescript-challenges/tsconfig.base.json"
+}
