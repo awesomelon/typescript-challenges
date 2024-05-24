@@ -20,6 +20,11 @@
 
 type MyExclude<T, U> = T extends U ? never : T
 
+type F = ['A', 'B', 'C', 'D', 'E', 'F']
+type C = ['B', 'C', 'D', 'E', 'F']
+
+type D = F & C
+
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
