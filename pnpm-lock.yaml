@@ -46,7 +46,7 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2
       typescript:
-        specifier: ^5.3.3
+        specifier: ^5.4.5
         version: 5.4.5
       utility-types:
         specifier: ^3.10.0
