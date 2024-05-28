@@ -26,6 +26,10 @@ type MyParameters<T extends (...args: any[]) => unknown> = T extends (
   ? P
   : unknown;
 
+type MyParameters2<T extends Function> = T extends (...args: infer P) => unknown
+  ? P
+  : unknown;
+
 type Foo = MyParameters<typeof foo>;
 
 /* _____________ 테스트 케이스 _____________ */
