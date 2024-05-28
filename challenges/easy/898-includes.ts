@@ -41,6 +41,10 @@ type Includes<T extends readonly any[], U> = T extends [infer F, ...infer Rest]
 //     [P in T[number]]: true
 // }[U] extends true ? true : false;
 
+type Goo = Includes<[{ a: "A" }], { readonly a: "A" }>;
+
+type Foo = Goo;
+
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
 
