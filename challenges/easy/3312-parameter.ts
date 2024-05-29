@@ -32,6 +32,8 @@ type MyParameters2<T extends Function> = T extends (...args: infer P) => unknown
 
 type Foo = MyParameters<typeof foo>;
 
+type Goo = typeof foo;
+
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
 
