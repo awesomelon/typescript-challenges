@@ -28,11 +28,18 @@
 
 /* _____________ 여기에 코드 입력 _____________ */
 
-type MyOmit<T, K extends keyof T> = {
-  [P in keyof T as P extends K ? never : P]: T[P];
-};
+// type MyOmit<T, K extends keyof T> = {
+//   [P in keyof T as P extends K ? never : P]: T[P];
+// };
+
+type MyExclude<T, U> = T extends U ? never : T;
+type MyPick<T, K extends keyof T> = { [P in K]: T[P] };
+
+type MyOmit<T, K extends keyof T> = MyPick<T, MyExclude<keyof T, K>>;
 
 type Foo = MyOmit<Todo, "description">;
+type Goo = MyOmit<Todo1, "description" | "completed">;
+type Goo2 = MyOmit<Todo1, "description" | "completed">;
 
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
