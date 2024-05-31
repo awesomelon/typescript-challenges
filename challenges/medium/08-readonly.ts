@@ -40,11 +40,15 @@ type MyExclude<T, U> = T extends U ? never : T;
 type MyPick<T, K extends keyof T> = { [P in K]: T[P] };
 type MyReadonly<T> = { readonly [K in keyof T]: T[K] };
 
-type MyReadonly2<T, K extends keyof T = keyof T> = MyPick<
-  T,
-  MyExclude<keyof T, K>
-> &
-  MyReadonly<T>;
+type MyOmit<T, K extends keyof T> = MyPick<T, MyExclude<keyof T, K>>;
+
+// type MyReadonly2<T, K extends keyof T = keyof T> = MyPick<
+//   T,
+//   MyExclude<keyof T, K>
+// > &
+//   MyReadonly<T>;
+
+type MyReadonly2<T, K extends keyof T = keyof T> = MyOmit<T, K> & MyReadonly<T>;
 
 type Foo = MyReadonly2<Todo1, "title" | "description">;
 
