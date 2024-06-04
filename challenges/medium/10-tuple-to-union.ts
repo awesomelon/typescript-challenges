@@ -26,6 +26,8 @@ type TupleToUnion<T extends Tuple[]> = T[number];
 
 type Goo = TupleToUnion<[123, "456"]>;
 
+const a = new Array(3).fill(2);
+
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
 
