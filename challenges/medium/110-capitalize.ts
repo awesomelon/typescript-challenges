@@ -51,7 +51,7 @@ type MyUpperCase<T extends string> = T extends keyof CharMap ? CharMap[T] : T;
 
 type MyCapitalize<S extends string> = S extends `${infer U}${infer Rest}`
   ? `${MyUpperCase<U>}${Rest}`
-  : "";
+  : S;
 
 type Foo = MyCapitalize<"foobar">;
 
