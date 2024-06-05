@@ -27,11 +27,19 @@
 //   values: readonly [...T],
 // ): Promise<{ [K in keyof T]: T[K] extends Promise<infer R> ? R : T[K] }>;
 
+// declare function PromiseAll<T extends any[]>(
+//   values: readonly [...T],
+// ): Promise<{
+//   [key in keyof T]: Awaited<T[key]>;
+// }>;
+
 declare function PromiseAll<T extends any[]>(
-  values: readonly [...T],
+  values: [...T],
 ): Promise<{
-  [key in keyof T]: Awaited<T[key]>;
+  [key in keyof T]: MyAwait<T[key]>;
 }>;
+
+type MyAwait<T> = T extends Promise<infer U> ? U : T;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
