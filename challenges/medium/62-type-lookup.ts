@@ -29,27 +29,28 @@
 
 /* _____________ 여기에 코드 입력 _____________ */
 
-// type LookUp<U, T extends PropertyKey> = T extends U[keyof U] ? U : never;
-
-type PropertyNamesExtType<U, T> = {
-  [K in keyof U]: U[K] extends T ? K : never;
-}[keyof U];
-
-type LookUp2<U, T> = Extract<U, { [K in PropertyNamesExtType<U, T>]: T }>;
-
-type LookUp3<U, T> = U extends {
-  [K in PropertyNamesExtType<U, T>]: T;
-}
-  ? U
-  : never;
-
-type LookUp4<U, T> = {
-  [K in keyof U]: U[K] extends T ? U : never;
-}[keyof U];
-
 type LookUp<Data, Type> = Data extends { type: Type } ? Data : never;
 
 type Foo = LookUp<Animal, "dog">;
+
+type Has<UItem, T> =
+  UItem extends Record<any, any>
+    ? { [P in keyof UItem]: Has<UItem[P], T> } extends {
+        [P in keyof UItem]: never;
+      }
+      ? never
+      : true
+    : T extends UItem
+      ? true
+      : never;
+
+type LookUp2<U, T> = U extends infer UItem
+  ? Has<UItem, T> extends never
+    ? never
+    : UItem
+  : never;
+
+type Goo = LookUp2<Animal, "Bengal">;
 
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
@@ -70,6 +71,7 @@ type Animal = Cat | Dog;
 type cases = [
   Expect<Equal<LookUp<Animal, "dog">, Dog>>,
   Expect<Equal<LookUp<Animal, "cat">, Cat>>,
+  Expect<Equal<LookUp2<Animal, "black">, Dog>>,
 ];
 
 /* _____________ 다음 단계 _____________ */
