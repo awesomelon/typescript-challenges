@@ -29,49 +29,49 @@
 
 /* _____________ 여기에 코드 입력 _____________ */
 
-type LookUp<Data, Type> = Data extends { type: Type } ? Data : never;
+// type LookUp<Data, Type> = Data extends { type: Type } ? Data : never;
 
 type Foo = LookUp<Animal, "dog">;
 
-type Has<UItem, T> =
-  UItem extends Record<any, any>
-    ? { [P in keyof UItem]: Has<UItem[P], T> } extends {
-        [P in keyof UItem]: never;
+type HasValue<H, T> =
+  H extends Record<any, any>
+    ? { [P in keyof H]: HasValue<H[P], T> } extends {
+        [P in keyof H]: false;
       }
-      ? never
+      ? false
       : true
-    : T extends UItem
+    : T extends H
       ? true
-      : never;
+      : false;
 
-type LookUp2<U, T> = U extends infer UItem
-  ? Has<UItem, T> extends never
+type LookUp<Datas, T> = Datas extends infer Data
+  ? HasValue<Data, T> extends false
     ? never
-    : UItem
+    : Data
   : never;
 
-type Goo = LookUp2<Animal, "Bengal">;
+type Goo = LookUp<Animal, "white">;
 
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
 
-interface Cat {
+type Cat = {
   type: "cat";
   breeds: "Abyssinian" | "Shorthair" | "Curl" | "Bengal";
-}
+};
 
-interface Dog {
+type Dog = {
   type: "dog";
   breeds: "Hound" | "Brittany" | "Bulldog" | "Boxer";
   color: "brown" | "white" | "black";
-}
+};
 
 type Animal = Cat | Dog;
 
 type cases = [
   Expect<Equal<LookUp<Animal, "dog">, Dog>>,
   Expect<Equal<LookUp<Animal, "cat">, Cat>>,
-  Expect<Equal<LookUp2<Animal, "black">, Dog>>,
+  Expect<Equal<LookUp<Animal, "white">, Dog>>,
 ];
 
 /* _____________ 다음 단계 _____________ */

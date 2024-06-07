@@ -24,10 +24,6 @@ type TrimLeft<S extends string> = S extends `${Whitespace}${infer Rest}`
   ? TrimLeft<Rest>
   : S;
 
-type TrimRight<S extends string> = S extends `${infer Rest}${Whitespace}`
-  ? TrimRight<Rest>
-  : S;
-
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
 
@@ -39,7 +35,6 @@ type cases = [
   Expect<Equal<TrimLeft<"   \n\t foo bar ">, "foo bar ">>,
   Expect<Equal<TrimLeft<"">, "">>,
   Expect<Equal<TrimLeft<" \n\t">, "">>,
-  Expect<Equal<TrimRight<"str     ">, "str">>,
 ];
 
 /* _____________ 다음 단계 _____________ */

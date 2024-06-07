@@ -18,7 +18,7 @@
 
 /* _____________ 여기에 코드 입력 _____________ */
 
-type CharMap = {
+type AlphabetMap = {
   a: "A";
   b: "B";
   c: "C";
@@ -47,13 +47,25 @@ type CharMap = {
   z: "Z";
 };
 
-type MyUpperCase<T extends string> = T extends keyof CharMap ? CharMap[T] : T;
+type MyUpperCase<T extends string> = T extends keyof AlphabetMap
+  ? AlphabetMap[T]
+  : T;
+
+type ReverseAlphabetMap = {
+  [K in keyof AlphabetMap as AlphabetMap[K]]: K;
+};
+
+type MyLowerCase<T extends string> = T extends keyof ReverseAlphabetMap
+  ? ReverseAlphabetMap[T]
+  : T;
 
 type MyCapitalize<S extends string> = S extends `${infer U}${infer Rest}`
   ? `${MyUpperCase<U>}${Rest}`
   : S;
 
 type Foo = MyCapitalize<"foobar">;
+
+type Zoo = MyLowerCase<"F">;
 
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
