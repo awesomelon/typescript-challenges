@@ -51,6 +51,10 @@ type MyUpperCase<T extends string> = T extends keyof AlphabetMap
   ? AlphabetMap[T]
   : T;
 
+type MyCapitalize<S extends string> = S extends `${infer U}${infer Rest}`
+  ? `${MyUpperCase<U>}${Rest}`
+  : S;
+
 type ReverseAlphabetMap = {
   [K in keyof AlphabetMap as AlphabetMap[K]]: K;
 };
@@ -58,10 +62,6 @@ type ReverseAlphabetMap = {
 type MyLowerCase<T extends string> = T extends keyof ReverseAlphabetMap
   ? ReverseAlphabetMap[T]
   : T;
-
-type MyCapitalize<S extends string> = S extends `${infer U}${infer Rest}`
-  ? `${MyUpperCase<U>}${Rest}`
-  : S;
 
 type Foo = MyCapitalize<"foobar">;
 
