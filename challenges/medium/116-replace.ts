@@ -24,19 +24,11 @@ type Replace<
   S extends string,
   From extends string,
   To extends string,
-> = S extends `${infer A}${EmptyStr<From>}${infer Rest}`
-  ? `${A}${To}${Rest}`
+> = S extends `${infer Head}${EmptyStr<From>}${infer Tail}`
+  ? `${Head}${To}${Tail}`
   : S;
 
-type Replace2<
-  S extends string,
-  From extends string,
-  To extends string,
-> = From extends ""
-  ? S
-  : S extends `${infer A}${From}${infer Rest}`
-    ? `${A}${To}${Rest}`
-    : S;
+type S = Replace<"foobarbar", "", "foo">;
 
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";

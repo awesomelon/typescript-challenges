@@ -24,8 +24,8 @@ type ReplaceAll<
   S extends string,
   From extends string,
   To extends string,
-> = S extends `${infer A}${EmptyStr<From>}${infer B}`
-  ? `${A}${To}${ReplaceAll<B, From, To>}`
+> = S extends `${infer Head}${EmptyStr<From>}${infer Tail}`
+  ? `${Head}${To}${ReplaceAll<Tail, From, To>}`
   : S;
 
 type Foo = ReplaceAll<"foobarfoobar", "ob", "b">;
