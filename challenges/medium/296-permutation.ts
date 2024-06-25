@@ -23,6 +23,14 @@ type Permutation<T, U = T> = [T] extends [never]
     ? [T, ...Permutation<Exclude<U, T>>]
     : [];
 
+type Foo = (string | number) & number;
+
+type Goo = string & unknown;
+
+type CCC = string | unknown;
+
+const c: CCC = 1;
+
 /* _____________ 테스트 케이스 _____________ */
 import type { Equal, Expect } from "@type-challenges/utils";
 

@@ -23,13 +23,13 @@
 
 /* _____________ 여기에 코드 입력 _____________ */
 
-type AppendArgument2<Fn extends Function, A> = Fn extends (
+type AppendArgument<Fn extends Function, A> = Fn extends (
   ...args: infer P
 ) => infer R
   ? (...args: [...P, A]) => R
   : never;
 
-type AppendArgument<Fn extends (...args: any) => any, Type> = (
+type AppendArgument2<Fn extends (...args: any) => any, Type> = (
   ...args: [...Parameters<Fn>, Type]
 ) => ReturnType<Fn>;
 
