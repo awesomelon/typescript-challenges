@@ -28,9 +28,9 @@ type ReplaceAll<
   ? `${Head}${To}${ReplaceAll<Tail, From, To>}`
   : S;
 
-// type DropChar<S extends string, C extends string> = ReplaceAll<S, C, "">;
+type DropChar<S extends string, C extends string> = ReplaceAll<S, C, "">;
 
-type DropChar<S, C extends string> = S extends `${infer L}${C}${infer R}`
+type DropChar2<S, C extends string> = S extends `${infer L}${C}${infer R}`
   ? DropChar<`${L}${R}`, C>
   : S;
 
